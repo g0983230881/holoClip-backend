@@ -30,7 +30,7 @@ public class YouTubeApiClientService {
             throw new YouTubeApiMisconfigurationException("YouTube API key is not configured. Please check your application.properties.");
         }
 
-        YouTube.Channels.List channelRequest = youtube.channels().list("snippet,statistics");
+        YouTube.Channels.List channelRequest = youtube.channels().list("snippet,statistics,contentDetails");
         channelRequest.setId(channelId);
         channelRequest.setKey(youtubeApiKey); // Directly set the API key on the request
 

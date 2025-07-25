@@ -11,19 +11,23 @@ public class YoutubeChannel {
     private Long videoCount;
     private String thumbnailUrl;
     private Boolean isVerified;
+    private String videosPlaylistId;
+    private String shortsPlaylistId;
     private OffsetDateTime lastUpdated;
     private OffsetDateTime createdAt;
 
     public YoutubeChannel() {
     }
 
-    public YoutubeChannel(String channelId, String channelName, Long subscriberCount, Long videoCount, String thumbnailUrl, Boolean isVerified, OffsetDateTime lastUpdated, OffsetDateTime createdAt) {
+    public YoutubeChannel(String channelId, String channelName, Long subscriberCount, Long videoCount, String thumbnailUrl, Boolean isVerified, String videosPlaylistId, String shortsPlaylistId, OffsetDateTime lastUpdated, OffsetDateTime createdAt) {
         this.channelId = channelId;
         this.channelName = channelName;
         this.subscriberCount = subscriberCount;
         this.videoCount = videoCount;
         this.thumbnailUrl = thumbnailUrl;
         this.isVerified = isVerified;
+        this.videosPlaylistId = videosPlaylistId;
+        this.shortsPlaylistId = shortsPlaylistId;
         this.lastUpdated = lastUpdated;
         this.createdAt = createdAt;
     }
@@ -92,6 +96,22 @@ public class YoutubeChannel {
         this.createdAt = createdAt;
     }
 
+    public String getVideosPlaylistId() {
+        return videosPlaylistId;
+    }
+
+    public void setVideosPlaylistId(String videosPlaylistId) {
+        this.videosPlaylistId = videosPlaylistId;
+    }
+
+    public String getShortsPlaylistId() {
+        return shortsPlaylistId;
+    }
+
+    public void setShortsPlaylistId(String shortsPlaylistId) {
+        this.shortsPlaylistId = shortsPlaylistId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -103,13 +123,15 @@ public class YoutubeChannel {
                 Objects.equals(videoCount, that.videoCount) &&
                 Objects.equals(thumbnailUrl, that.thumbnailUrl) &&
                 Objects.equals(isVerified, that.isVerified) &&
+                Objects.equals(videosPlaylistId, that.videosPlaylistId) &&
+                Objects.equals(shortsPlaylistId, that.shortsPlaylistId) &&
                 Objects.equals(lastUpdated, that.lastUpdated) &&
                 Objects.equals(createdAt, that.createdAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(channelId, channelName, subscriberCount, videoCount, thumbnailUrl, isVerified, lastUpdated, createdAt);
+        return Objects.hash(channelId, channelName, subscriberCount, videoCount, thumbnailUrl, isVerified, videosPlaylistId, shortsPlaylistId, lastUpdated, createdAt);
     }
 
     @Override
@@ -121,6 +143,8 @@ public class YoutubeChannel {
                 ", videoCount=" + videoCount +
                 ", thumbnailUrl='" + thumbnailUrl + '\'' +
                 ", isVerified=" + isVerified +
+                ", videosPlaylistId='" + videosPlaylistId + '\'' +
+                ", shortsPlaylistId='" + shortsPlaylistId + '\'' +
                 ", lastUpdated=" + lastUpdated +
                 ", createdAt=" + createdAt +
                 '}';

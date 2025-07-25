@@ -13,8 +13,8 @@
     </select>
 
     <insert id="insert" parameterType="com.HoloClip.Collector.model.YoutubeChannel">
-        INSERT INTO youtube_channels (channel_id, channel_name, subscriber_count, video_count, thumbnail_url, is_verified, last_updated, created_at)
-        VALUES (#{channelId}, #{channelName}, #{subscriberCount}, #{videoCount}, #{thumbnailUrl}, #{isVerified}, #{lastUpdated}, #{createdAt})
+        INSERT INTO youtube_channels (channel_id, channel_name, subscriber_count, video_count, thumbnail_url, is_verified, last_updated, created_at, videos_playlist_id, shorts_playlist_id)
+        VALUES (#{channelId}, #{channelName}, #{subscriberCount}, #{videoCount}, #{thumbnailUrl}, #{isVerified}, #{lastUpdated}, #{createdAt}, #{videosPlaylistId}, #{shortsPlaylistId})
     </insert>
 
     <update id="updateVerificationStatus">
@@ -28,7 +28,7 @@
                 AND is_verified = #{isVerified}
             </if>
             <if test="channelName != null and channelName != ''">
-                AND channel_name ILIKE CONCAT('%', #{channelName}, '%')
+                AND channel_name ILIKE CONCAT(#{channelName}, '%')
             </if>
         </where>
     </select>
@@ -41,6 +41,8 @@
             <if test="videoCount != null">video_count = #{videoCount},</if>
             <if test="thumbnailUrl != null">thumbnail_url = #{thumbnailUrl},</if>
             <if test="isVerified != null">is_verified = #{isVerified},</if>
+            <if test="videosPlaylistId != null">videos_playlist_id = #{videosPlaylistId},</if>
+            <if test="shortsPlaylistId != null">shorts_playlist_id = #{shortsPlaylistId},</if>
             last_updated = NOW()
         </set>
         WHERE channel_id = #{channelId}

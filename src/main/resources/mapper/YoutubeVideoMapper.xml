@@ -8,7 +8,7 @@
             v.video_id, v.channel_id, v.title, v.thumbnail_url, v.published_at,
             c.channel_name AS channel_title, c.thumbnail_url AS channel_thumbnail_url
         FROM
-            channel_videos v
+            youtube_videos v
         JOIN
             youtube_channels c ON v.channel_id = c.channel_id
         <where>

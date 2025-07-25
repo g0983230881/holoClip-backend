@@ -1,0 +1,24 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.HoloClip.Collector.mapper.YoutubeShortMapper">
+
+    <select id="findShortsByCriteria" resultType="com.HoloClip.Collector.model.YoutubeShort">
+        SELECT
+            s.video_id, s.channel_id, s.title, s.thumbnail_url, s.published_at,
+            c.channel_name AS channel_title, c.thumbnail_url AS channel_thumbnail_url
+        FROM
+            youtube_shorts s
+        JOIN
+            youtube_channels c ON s.channel_id = c.channel_id
+        <where>
+            <if test="search != null and search != ''">
+                AND s.title ILIKE #{search} || '%'
+            </if>
+            <if test="channelId != null and channelId != ''">
+                AND s.channel_id = #{channelId}
+            </if>
+        </where>
+    </select>
+
+</mapper>

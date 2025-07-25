@@ -36,6 +36,10 @@ public class YoutubeChannelService {
             throw new ChannelNotFoundException("Channel with ID " + channelId + " not found on YouTube.");
         }
 
+        String uploadsPlaylistId = youtubeChannelData.getContentDetails().getRelatedPlaylists().getUploads();
+        String videosPlaylistId = uploadsPlaylistId; // Assuming uploads is the main video playlist
+        String shortsPlaylistId = uploadsPlaylistId.replace("UU", "UUSH"); // Heuristic for shorts playlist
+
         YoutubeChannel newChannel = new YoutubeChannel(
                 youtubeChannelData.getId(),
                 youtubeChannelData.getSnippet().getTitle(),
@@ -43,6 +47,8 @@ public class YoutubeChannelService {
                 youtubeChannelData.getStatistics().getVideoCount().longValue(),
                 youtubeChannelData.getSnippet().getThumbnails().getDefault().getUrl(),
                 true, // isVerified
+                videosPlaylistId,
+                shortsPlaylistId,
                 OffsetDateTime.now(),
                 OffsetDateTime.now()
         );

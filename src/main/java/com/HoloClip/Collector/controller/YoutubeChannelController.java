@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import com.github.pagehelper.Page;
@@ -53,14 +54,19 @@ public class YoutubeChannelController {
             @RequestParam(required = false) String channelName,
             @RequestParam(defaultValue = "createdAt,desc") String sort) {
 
-        String sortColumn = "created_at";
+        String sortColumn = "createdAt";
         String sortDirection = "DESC";
+
+        // Whitelist for sortable columns to prevent potential issues and improve security
+        List<String> allowedSortColumns = Arrays.asList("createdAt", "channelName", "subscriberCount", "videoCount", "viewCount");
 
         if (StringUtils.hasText(sort)) {
             String[] sortParams = sort.split(",");
-            sortColumn = sortParams[0];
-            if (sortParams.length > 1) {
-                sortDirection = sortParams[1];
+            if (allowedSortColumns.contains(sortParams[0])) {
+                sortColumn = sortParams[0];
+            }
+            if (sortParams.length > 1 && "asc".equalsIgnoreCase(sortParams[1])) {
+                sortDirection = "ASC";
             }
         }
 
