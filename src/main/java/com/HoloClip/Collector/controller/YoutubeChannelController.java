@@ -48,17 +48,17 @@ public class YoutubeChannelController {
 
     @GetMapping
     public ResponseEntity<PageResponse<YoutubeChannel>> getChannels(
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(required = false) Integer page,
+            @RequestParam(required = false) Integer size,
             @RequestParam(required = false) Boolean isVerified,
             @RequestParam(required = false) String channelName,
-            @RequestParam(defaultValue = "createdAt,desc") String sort) {
+            @RequestParam(defaultValue = "channelName,asc") String sort) {
 
-        String sortColumn = "createdAt";
-        String sortDirection = "DESC";
+        String sortColumn = "channelName";
+        String sortDirection = "ASC";
 
         // Whitelist for sortable columns to prevent potential issues and improve security
-        List<String> allowedSortColumns = Arrays.asList("createdAt", "channelName", "subscriberCount", "videoCount", "viewCount");
+        List<String> allowedSortColumns = Arrays.asList("createdAt", "channelName", "subscriberCount", "videoCount");
 
         if (StringUtils.hasText(sort)) {
             String[] sortParams = sort.split(",");

@@ -72,12 +72,30 @@ public class YoutubeChannelService {
         return youtubeChannelMapper.findByIsVerifiedFalse();
     }
 
-    public Page<YoutubeChannel> getChannels(Boolean isVerified, String channelName, int page, int size, String sortColumn, String sortDirection) {
+    public Page<YoutubeChannel> getChannels(Boolean isVerified, String channelName, Integer page, Integer size, String sortColumn, String sortDirection) {
         sortColumn = convertSortPropertyToColumn(sortColumn);
         String orderBy = sortColumn + " " + (sortDirection.equalsIgnoreCase("DESC") ? "DESC" : "ASC");
+
+        if (size != null) {
+            int pageNum = (page != null) ? page : 1;
+            PageHelper.startPage(pageNum, size, orderBy);
+        } else {
+            PageHelper.orderBy(orderBy);
+        }
         
-        PageHelper.startPage(page, size, orderBy);
-        return (Page<YoutubeChannel>) youtubeChannelMapper.findAll(isVerified, channelName);
+        List<YoutubeChannel> channels = youtubeChannelMapper.findAll(isVerified, channelName);
+
+        if (channels instanceof Page) {
+            return (Page<YoutubeChannel>) channels;
+        } else {
+            Page<YoutubeChannel> pageResult = new Page<>();
+            pageResult.addAll(channels);
+            pageResult.setTotal(channels.size());
+            pageResult.setPageNum(1);
+            pageResult.setPageSize(channels.size());
+            pageResult.setPages(1);
+            return pageResult;
+        }
     }
 
     public YoutubeChannel getChannelById(String channelId) {
