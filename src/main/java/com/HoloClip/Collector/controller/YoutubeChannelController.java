@@ -17,7 +17,6 @@ import org.springframework.util.StringUtils;
 
 @RestController
 @RequestMapping("/api/channels")
-@CrossOrigin(origins = "http://localhost:5173")
 public class YoutubeChannelController {
 
     private final YoutubeChannelService youtubeChannelService;

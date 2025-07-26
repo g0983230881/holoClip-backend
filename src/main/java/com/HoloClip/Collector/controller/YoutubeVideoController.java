@@ -23,7 +23,6 @@ public class YoutubeVideoController {
         this.youtubeVideoService = youtubeVideoService;
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping
     public ResponseEntity<PageResponse<YoutubeVideo>> getVideos(
             @RequestParam(required = false) String search,

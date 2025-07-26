@@ -23,7 +23,6 @@ public class YoutubeShortController {
         this.youtubeShortService = youtubeShortService;
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping
     public ResponseEntity<PageResponse<YoutubeShort>> getShorts(
             @RequestParam(required = false) String search,
